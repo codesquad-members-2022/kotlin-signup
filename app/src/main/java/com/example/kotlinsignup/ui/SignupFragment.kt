@@ -50,6 +50,10 @@ class SignupFragment : Fragment() {
         passwordEvent()
         confirmPasswordEvent()
         nameEvent()
+        nextButton.setOnClickListener {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.container_main, PersonalInformation()).commit()
+        }
     }
 
     private fun buttonEnable() {
@@ -149,7 +153,6 @@ class SignupFragment : Fragment() {
                 idMessageTextView.setTextColor(Color.GREEN)
             }
             buttonEnable()
-
         }
     }
 
