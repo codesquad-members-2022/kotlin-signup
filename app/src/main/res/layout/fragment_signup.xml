@@ -44,10 +44,18 @@
         app:layout_constraintTop_toBottomOf="@id/tv_id" />
 
     <TextView
+        android:id="@+id/tv_id_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/edittext_id"
+        app:layout_constraintTop_toBottomOf="@id/edittext_id" />
+
+    <TextView
         android:id="@+id/tv_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="@string/signup_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,10 +76,29 @@
         app:layout_constraintTop_toBottomOf="@id/tv_password" />
 
     <TextView
+        android:id="@+id/tv_password_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/edittext_password"
+        app:layout_constraintTop_toBottomOf="@id/edittext_password" />
+
+    <ImageView
+        android:id="@+id/iv_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_baseline_remove_red_eye_24"
+        app:layout_constraintBottom_toBottomOf="@id/edittext_password"
+        app:layout_constraintEnd_toEndOf="@id/edittext_password"
+        app:layout_constraintTop_toTopOf="@id/edittext_password" />
+
+    <TextView
         android:id="@+id/tv_confirm_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="@string/signup_confirm_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,10 +118,28 @@
         app:layout_constraintTop_toBottomOf="@id/tv_confirm_password" />
 
     <TextView
+        android:id="@+id/tv_confirm_password_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/edittext_confirm_password"
+        app:layout_constraintTop_toBottomOf="@id/edittext_confirm_password" />
+
+    <ImageView
+        android:id="@+id/iv_confirm_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_baseline_remove_red_eye_24"
+        app:layout_constraintBottom_toBottomOf="@id/edittext_confirm_password"
+        app:layout_constraintEnd_toEndOf="@id/edittext_confirm_password"
+        app:layout_constraintTop_toTopOf="@id/edittext_confirm_password" />
+
+    <TextView
         android:id="@+id/tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="@string/signup_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +157,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_name_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/edittext_name"
+        app:layout_constraintTop_toBottomOf="@id/edittext_name" />
 
 
     <androidx.appcompat.widget.AppCompatButton
