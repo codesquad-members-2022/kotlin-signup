@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">kotlin-signup</string>
+    <string name="MainText">회원가입</string>
+    <string name="id">아이디</string>
+    <string name="IdHint">영문, 소문자, 숫자, 특수기호 : 5 ~ 20자</string>
+</resources>
