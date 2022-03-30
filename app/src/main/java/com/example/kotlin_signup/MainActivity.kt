@@ -14,12 +14,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.idTextInputEditText.hint = "영문, 소문자, 숫자, 특수기호 : 5 ~ 20자"
+        binding.idTextInputEditText.hint = resources.getString(R.string.id_hint)
         binding.idTextInputEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 binding.idTextInputEditText.hint = ""
             } else {
-                binding.idTextInputEditText.hint = R.string.IdHint.toString()
+                binding.idTextInputEditText.hint = resources.getString(R.string.id_hint)
+            }
+        }
+
+        binding.passwordTextInputEditText.hint = resources.getString(R.string.password_hint)
+        binding.passwordTextInputEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.passwordTextInputEditText.hint = ""
+            } else {
+                binding.passwordTextInputEditText.hint = resources.getString(R.string.password_hint)
             }
         }
     }
