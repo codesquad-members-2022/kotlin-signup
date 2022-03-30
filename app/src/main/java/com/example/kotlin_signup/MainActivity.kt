@@ -4,48 +4,49 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.View
 import com.example.kotlin_signup.databinding.ActivityMainBinding
-import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+    private var idFlag = false
+    private var passwordFlag = false
+    private var passwordCheckFlag = false
+    private var nameFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        with(binding) {
-            idTextInputLayout.editText?.addTextChangedListener(idListener)
-            idTextInputEditText.hint = resources.getString(R.string.id_hint)
-            idTextInputEditText.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    binding.idTextInputEditText.hint = ""
-                } else {
-                    binding.idTextInputEditText.hint = resources.getString(R.string.id_hint)
-                }
+        binding.nextButton.isEnabled = false
+
+        binding.idTextInputLayout.editText?.addTextChangedListener(idListener)
+        binding.idTextInputEditText.hint = resources.getString(R.string.id_hint)
+        binding.idTextInputEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.idTextInputEditText.hint = ""
+            } else {
+                binding.idTextInputEditText.hint = resources.getString(R.string.id_hint)
             }
-
-            passwordTextInputLayout.editText?.addTextChangedListener(passwordListener)
-            passwordTextInputEditText.hint = resources.getString(R.string.password_hint)
-            passwordTextInputEditText.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    binding.passwordTextInputEditText.hint = ""
-                } else {
-                    binding.passwordTextInputEditText.hint =
-                        resources.getString(R.string.password_hint)
-                }
-            }
-
-            passwordRecheckTextInputLayout.editText?.addTextChangedListener(
-                passwordRecheckListener
-            )
-
-            nameTextviewInputLayout.editText?.addTextChangedListener(nameListener)
         }
+
+        binding.passwordTextInputLayout.editText?.addTextChangedListener(passwordListener)
+        binding.passwordTextInputEditText.hint = resources.getString(R.string.password_hint)
+        binding.passwordTextInputEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.passwordTextInputEditText.hint = ""
+            } else {
+                binding.passwordTextInputEditText.hint =
+                    resources.getString(R.string.password_hint)
+            }
+        }
+
+        binding.passwordRecheckTextInputLayout.editText?.addTextChangedListener(
+            passwordRecheckListener
+        )
+
+        binding.nameTextviewInputLayout.editText?.addTextChangedListener(nameListener)
     }
 
     private val idListener = object : TextWatcher {
@@ -60,19 +61,20 @@ class MainActivity : AppCompatActivity() {
                 when {
                     s.isEmpty() -> {
                         binding.idTextInputLayout.error = "아이디를 입력해주세요."
-                        binding.nextButton.isEnabled = false
+                        idFlag = false
                     }
                     !idRegex(s.toString()) -> {
                         binding.idTextInputLayout.error = "아이디 양식이 맞지 않습니다"
-                        binding.nextButton.isEnabled = false
+                        idFlag = false
                     }
                     else -> {
-                        binding.passwordTextInputLayout.error = null
+                        binding.idTextInputLayout.error = null
+                        idFlag = true
                     }
                 }
+                flagCheck()
             }
         }
-
     }
 
     private val passwordListener = object : TextWatcher {
@@ -87,16 +89,18 @@ class MainActivity : AppCompatActivity() {
                 when {
                     s.isEmpty() -> {
                         binding.passwordTextInputLayout.error = "비밀번호를 입력해주세요."
-                        binding.nextButton.isEnabled = false
+                        passwordFlag = false
                     }
                     !passwordRegex(s.toString()) -> {
                         binding.passwordTextInputLayout.error = "비밀번호 양식이 일치하지 않습니다."
-                        binding.nextButton.isEnabled = false
+                        passwordFlag = false
                     }
                     else -> {
                         binding.passwordTextInputLayout.error = null
+                        passwordFlag = true
                     }
                 }
+                flagCheck()
             }
         }
     }
@@ -112,16 +116,18 @@ class MainActivity : AppCompatActivity() {
             if (s != null) {
                 when {
                     s.isEmpty() -> {
-                        binding.nextButton.isEnabled = false
+                        passwordCheckFlag = false
                     }
                     binding.passwordRecheckTextInputLayout.editText?.text.toString() != binding.passwordTextInputLayout.editText?.text.toString() -> {
                         binding.passwordRecheckTextInputLayout.error = "비밀번호가 일치하지 않습니다"
-                        binding.nextButton.isEnabled = false
+                        passwordCheckFlag = false
                     }
                     else -> {
                         binding.passwordRecheckTextInputLayout.error = null
+                        passwordCheckFlag = true
                     }
                 }
+                flagCheck()
             }
         }
     }
@@ -137,13 +143,15 @@ class MainActivity : AppCompatActivity() {
             if (s != null) {
                 when {
                     s.isEmpty() -> {
-                        binding.nextButton.isEnabled = false
                         binding.nameTextviewInputLayout.error = "이름은 필수 입력 항목입니다."
+                        nameFlag = false
                     }
                     else -> {
                         binding.nameTextviewInputLayout.error = null
+                        nameFlag = true
                     }
                 }
+                flagCheck()
             }
         }
     }
@@ -177,5 +185,9 @@ class MainActivity : AppCompatActivity() {
 
     fun passwordRegex(password: String): Boolean {
         return password.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{8,16}$".toRegex())
+    }
+
+    fun flagCheck() {
+        binding.nextButton.isEnabled = idFlag && passwordFlag && passwordCheckFlag && nameFlag
     }
 }
