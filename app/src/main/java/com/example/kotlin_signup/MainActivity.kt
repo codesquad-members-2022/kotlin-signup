@@ -1,9 +1,12 @@
 package com.example.kotlin_signup
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import com.example.kotlin_signup.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -189,5 +192,11 @@ class MainActivity : AppCompatActivity() {
 
     fun flagCheck() {
         binding.nextButton.isEnabled = idFlag && passwordFlag && passwordCheckFlag && nameFlag
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        val imm: InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        return true
     }
 }
