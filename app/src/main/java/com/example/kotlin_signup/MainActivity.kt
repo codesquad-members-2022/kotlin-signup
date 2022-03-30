@@ -13,5 +13,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.idTextInputEditText.hint = "영문, 소문자, 숫자, 특수기호 : 5 ~ 20자"
+        binding.idTextInputEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.idTextInputEditText.hint = ""
+            } else {
+                binding.idTextInputEditText.hint = R.string.IdHint.toString()
+            }
+        }
     }
 }
