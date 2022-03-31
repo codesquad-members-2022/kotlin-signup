@@ -10,9 +10,11 @@ import android.view.inputmethod.InputMethodManager
 import com.example.kotlin_signup.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
     private var idFlag = false
     private var passwordFlag = false
     private var passwordCheckFlag = false
