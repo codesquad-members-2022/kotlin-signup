@@ -5,8 +5,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitAPI {
-    private val baseURL = "https://api.codesquad.kr/"
+object RetrofitAPI {
+    private const val BASE_URL = "https://api.codesquad.kr/"
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -18,7 +18,7 @@ class RetrofitAPI {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(baseURL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient) // 로그캣에서 패킷 내용을 모니터링 할 수 있음 (인터셉터)
             .build()

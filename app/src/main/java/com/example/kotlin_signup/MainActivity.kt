@@ -52,6 +52,16 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.nameTextviewInputLayout.editText?.addTextChangedListener(nameListener)
+
+        val userData = SignUpRequestBody(
+            binding.idTextInputLayout.editText?.text.toString(),
+            binding.passwordTextInputLayout.editText?.text.toString()
+        )
+
+        binding.nextButton.setOnClickListener {
+            val retrofitWork = RetrofitWork(userData)
+            retrofitWork.work()
+        }
     }
 
     private val idListener = object : TextWatcher {
@@ -137,7 +147,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val nameListener = object  : TextWatcher {
+    private val nameListener = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
         }
 
@@ -197,7 +207,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        val imm: InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager =
+            this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         return true
     }
