@@ -3,24 +3,32 @@ package com.example.kotlinsignup.ui.signup
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinsignup.R
+import com.example.kotlinsignup.Users
 import com.example.kotlinsignup.databinding.FragmentSignupBinding
 import com.example.kotlinsignup.ui.PersonalInformation
+import com.example.kotlinsignup.ui.SignupViewModelFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignupFragment : Fragment() {
 
     private var passwordShowFlag = false
     private var confirmPasswordShowFlag = false
-    private lateinit var viewModel: SignupViewModel
+    private val viewModel: SignupViewModel by viewModels { SignupViewModelFactory() }
     private lateinit var binding: FragmentSignupBinding
 
     override fun onCreateView(
@@ -32,7 +40,6 @@ class SignupFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel = ViewModelProvider(requireActivity()).get(SignupViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

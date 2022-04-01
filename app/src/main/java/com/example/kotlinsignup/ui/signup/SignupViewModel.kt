@@ -6,15 +6,31 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.kotlinsignup.R
 import com.example.kotlinsignup.User
+import com.example.kotlinsignup.Users
+import com.example.kotlinsignup.repository.Repository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
-class SignupViewModel : ViewModel() {
+class SignupViewModel(
+    private val repository: Repository
+) : ViewModel() {
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
         get() = _user
+
+    private val _users = MutableLiveData<Users>()
+    val users: LiveData<Users>
+        get() = _users
 
     val id: MutableLiveData<String> = MutableLiveData()
     val idMessage: MutableLiveData<Int> = MutableLiveData()
@@ -71,17 +87,33 @@ class SignupViewModel : ViewModel() {
             editable ?: return
             val pattern = """^[0-9a-z-_]{5,20}$""".toRegex()
             idFlag = false
-            if (!pattern.matches(editable)) {
-                idMessage.value = R.string.id_formatting_message
-                idColor.value = R.color.red
-            } else {
-                idMessage.value = R.string.id_success_message
-                idColor.value = R.color.green
-                idFlag = true
+            when {
+                !pattern.matches(editable) -> {
+                    idMessage.value = R.string.id_formatting_message
+                    idColor.value = R.color.red
+                    updateEnabled()
+                }
+                else -> checkUser(editable)
             }
-            updateEnabled()
         }
 
+        private fun checkUser(editable: Editable) {
+            viewModelScope.launch {
+                val userList = repository.getUsers()
+                val id = userList?.find { editable.toString() == it }
+
+                id?.let {
+                    idMessage.value = R.string.id_already_message
+                    idColor.value = R.color.red
+                    updateEnabled()
+                } ?: run {
+                    idMessage.value = R.string.id_success_message
+                    idColor.value = R.color.green
+                    idFlag = true
+                    updateEnabled()
+                }
+            }
+        }
     }
 
     val passwordWatcher = object : TextWatcher {
@@ -140,7 +172,6 @@ class SignupViewModel : ViewModel() {
     }
 
     private fun updateEnabled() {
-        Log.d("abcd", "updateEnabled: ${isEnable.value}")
         isEnable.value = idFlag && passwordFlag && confirmPasswordFlag && nameFlag
     }
 
