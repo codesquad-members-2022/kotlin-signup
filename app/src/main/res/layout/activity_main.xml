@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container_main"
-        android:name="com.example.kotlinsignup.ui.SignupFragment"
+        android:name="com.example.kotlinsignup.ui.signup.SignupFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
